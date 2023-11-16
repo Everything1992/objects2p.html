@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Part 2 - Character Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: lavender;
+            color: blue;
+        }
+
+        h1 {
+            color: mediumslateblue;
+        }
+
+        form {
+            margin-bottom: 20px;
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        textarea, input {
+            padding: 8px;
+            margin-bottom: 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: dodgerblue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: deepskyblue;
+        }
+
+        #outputResult {
+            background-color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            color: dodgerblue;
+            text-decoration: none;
+            display: block;
+            margin-top: 20px;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Character Search</h1>
+
+    <form id="searchForm">
+        <label for="longContent">Type a long content:</label>
+        <textarea id="longContent" rows="5" required></textarea>
+
+        <label for="searchChar">Type a single character to search:</label>
+        <input type="text" id="searchChar" maxlength="1" required pattern="[a-zA-Z]" title="Enter a single letter">
+
+        <button type="button" onclick="searchCharacter()">Submit</button>
+    </form>
+
+    <div id="outputResult"></div>
+
+    <a href="index.html">Go back to Homework 6</a>
+
+    <script>
+        function searchCharacter() {
+            var longContent = document.getElementById('longContent').value;
+            var searchChar = document.getElementById('searchChar').value.toLowerCase();
+            var outputElement = document.getElementById('outputResult');
+
+            var charCount = countCharacter(longContent, searchChar);
+
+            if (charCount > 0) {
+                outputElement.innerHTML = "The character '" + searchChar + "' shows up " + charCount + " times in the content.";
+            } else {
+                var errorMessage = "Search character '" + searchChar + "' not found in the content you typed";
+                outputElement.innerHTML = errorMessage;
+                window.open('about:blank', 'SearchErrorWindow', 'width=300,height=100,top=200,left=200');
+                var errorWindow = window.open('', 'SearchErrorWindow');
+                errorWindow.document.write('<html><head><title>Error</title></head><body><p>' + errorMessage + '</p><button onclick="window.close()">Close</button></body></html>');
+            }
+        }
+
+        function countCharacter(content, char) {
+            var lowerContent = content.toLowerCase();
+            var lowerChar = char.toLowerCase();
+            var count = 0;
+
+            for (var i = 0; i < lowerContent.length; i++) {
+                if (lowerContent[i] === lowerChar) {
+                    count++;
+                }
+            }
+
+            return count;
+        }
+    </script>
+
+</body>
+</html>
